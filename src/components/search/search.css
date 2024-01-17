@@ -1,0 +1,21 @@
+.search {
+    margin-bottom: 32px;
+  }
+
+.search .ant-input-group-addon {
+  display: none;
+}
+
+.search .ant-input:first-child {
+  border-radius: 6px;
+}
+
+.search .ant-input {
+  padding: 8px 12px;
+}
+  
+@media (max-width: 992px) {
+  .search {
+    margin-bottom: 10px;
+  }
+}
