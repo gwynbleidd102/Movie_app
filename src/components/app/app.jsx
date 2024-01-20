@@ -3,7 +3,7 @@ import { Spin, Alert } from 'antd'
 import { debounce } from 'lodash'
 
 import ApiService from '../../services/api-service'
-import { GenresProvider } from '../genres-context/genres-context'
+import { GenresProvider } from '../../context/genres-context/genres-context'
 import Header from '../header'
 import Search from '../search'
 import MoviesList from '../movies-list'
