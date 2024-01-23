@@ -82,18 +82,16 @@ export default class ApiService {
     return this.getResource(`${this.url}/3/authentication/guest_session/new`)
   }
 
-  // createGuestSession = async () => {
-  //   try {
-  //     const response = await this.getResource('/3/authentication/guest_session/new')
-  //     if (!response.success) {
-  //       throw new Error('Ошибка при создании гостевой сессии')
-  //     }
-  //     return response
-  //   } catch (error) {
-  //     console.error('Ошибка при создании гостевой сессии:', error)
-  //     throw error
-  //   }
-  // }
+  createGuestSessionAndSaveId = async () => {
+    try {
+      const { guest_session_id } = await this.createGuestSession()
+      localStorage.setItem('guestSessionId', guest_session_id)
+      // console.log('Guest session ID::', guest_session_id)
+    } catch (error) {
+      console.error('Error creating guest session:', error)
+      throw error
+    }
+  }
 
   getMovies = async (text, page, guestKey) => {
     let urlParameter

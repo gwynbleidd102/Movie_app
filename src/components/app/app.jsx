@@ -28,6 +28,20 @@ export default class App extends React.Component {
     genres: [],
   }
 
+  componentDidMount() {
+    // this.getGuestSessionKey()
+    const savedGuestSessionId = localStorage.getItem('guestSessionId')
+
+    if (!savedGuestSessionId) {
+      this.api.createGuestSessionAndSaveId()
+    } else {
+      this.setState({ guestKey: savedGuestSessionId })
+    }
+
+    this.getGenres()
+    this.downloadMovies()
+  }
+
   onSearch = (elem) => {
     this.setState({ searchText: elem.target.value, page: 1 })
     this.downloadMovies(elem.target.value)
@@ -56,6 +70,8 @@ export default class App extends React.Component {
           page: response.page,
           loading: false,
         })
+        const totalPages = Math.ceil(response.total_results / 20)
+        this.setState({ totalPages })
       })
       .catch(this.onError)
   }
@@ -83,12 +99,6 @@ export default class App extends React.Component {
       .getGenres()
       .then((data) => this.setState({ genres: data.genres }))
       .catch((err) => this.setState({ error: err }))
-  }
-
-  componentDidMount() {
-    this.getGuestSessionKey()
-    this.getGenres()
-    this.downloadMovies()
   }
 
   debouncedOnSearch = debounce((elem) => this.onSearch(elem), 1000)
@@ -159,7 +169,13 @@ export default class App extends React.Component {
           {content}
           {noMoviesMsg}
         </main>
-        <Footer totalMovies={this.state.totalMovies} page={this.state.page} onChangePage={this.onChangePage} />
+        <Footer
+          tab={this.state.tab}
+          // totalMovies={this.state.totalMovies}
+          totalPages={this.state.totalPages}
+          page={this.state.page}
+          onChangePage={this.onChangePage}
+        />
       </div>
     )
   }
