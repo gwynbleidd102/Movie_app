@@ -70,7 +70,7 @@ export default class App extends React.Component {
           page: response.page,
           loading: false,
         })
-        const totalPages = Math.ceil(response.total_results / 20)
+        const totalPages = response.total_results
         this.setState({ totalPages })
       })
       .catch(this.onError)
